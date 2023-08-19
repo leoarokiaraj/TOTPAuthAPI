@@ -19,14 +19,18 @@ Also, be sure to have `git` available in your PATH, `npm` might need it (You can
 If the installation was successful, you should be able to run the following command.
 
     $ node --version
-    v8.11.3
+    v18.15.0
 
     $ npm --version
-    6.1.0
+    9.5.0
 
 ## Development server
 
-Run `npm run dev` for a dev server. Navigate to `http://localhost:3001/`.
+* Create `config\dev.env` with the following environment properties
+  * PORT={local_port_number}
+  * DOMAIN={domain_to_restrict_api}
+  * TOTP_SECRET={secret_for_otpauth}
+* Run `npm run dev` for a dev server. Navigate to `http://localhost:3001/`.
 
 
 ## REST API
@@ -39,7 +43,7 @@ The REST API to the TOTPAuthAPI app is described below.
 
 `GET api/register-totp?username:{username}`
 
-  curl http://localhost:7000/api/register-totp?username:test --output "D:\QRImage.png"
+  curl http://localhost:3001/api/register-totp?username:test --output "D:\QRImage.png"
 
 ### Response
 
@@ -56,7 +60,7 @@ The REST API to the TOTPAuthAPI app is described below.
 
 `GET api/validate-totp?username:{username}&token={token}`
 
-  curl http://localhost:7000/api/validate-totp?username=test&token=123456
+  curl http://localhost:3001/api/validate-totp?username=test&token=123456
 
 ### Response
 
