@@ -1,5 +1,10 @@
-const OTPAuth  = require("otpauth")
+const speakeasy  = require("speakeasy")
 
+const totpOpts = {
+  window: 2,
+  issuer: 'Leo',
+  algorithm: 'sha1' 
+}
 
 const registerTOTPService = async (username) => {
     return new Promise((resp, rejp) => {
@@ -17,7 +22,11 @@ const registerTOTPService = async (username) => {
   const _registerTOTP = async(username,resp, rejp) => {
     try {  
 
-      let totp = await generateTOTP(username)
+      let totp = speakeasy.otpauthURL({ 
+                    secret: process.env.TOTP_SECRET+username.toUpperCase(), 
+                    label: username,
+                    ...totpOpts
+                  });
 
       let data = totp.toString();
   
@@ -40,11 +49,13 @@ const registerTOTPService = async (username) => {
   const _validateTOTP = async(username, token, resp, rejp) => {
     try {  
 
-      let totp = await generateTOTP(username)
-
-      let delta = totp.validate({ token , window: 1 });
+      let delta = speakeasy.totp.verifyDelta({ 
+                    secret: process.env.TOTP_SECRET+username.toUpperCase(),
+                    token: token,
+                    ...totpOpts 
+                  });
   
-      if (delta === null || delta === -1){
+      if (delta === null || typeof  delta === 'undefined'){
         resp({
           StatusCode: 401,
           Status: "Invalid",
@@ -68,22 +79,6 @@ const registerTOTPService = async (username) => {
       }
   }
   
-
-  const generateTOTP = async(username) => {
-
-    let totp = new OTPAuth.TOTP({
-      issuer: "Leo",
-      label: username,
-      algorithm: "SHA1",
-      digits: 6,
-      period: 30,
-      secret: process.env.TOTP_SECRET+username,
-    });
-
-    return totp
-    
-
-  }
 
 
 TOTPAuthService = {
