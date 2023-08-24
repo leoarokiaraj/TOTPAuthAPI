@@ -69,4 +69,11 @@ The REST API to the TOTPAuthAPI app is described below.
     Status: 200 OK
     Connection: close
     Content-Type: application/json; charset=utf-8
+    {
+      "StatusCode": 200,
+      "Status": "Success",
+      "delta": {
+        "delta": 0
+      }
+    }
     
