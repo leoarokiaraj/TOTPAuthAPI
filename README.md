@@ -43,7 +43,7 @@ The REST API to the TOTPAuthAPI app is described below.
 
 `GET api/register-totp?username:{username}`
 ```bash
-  curl http://localhost:3001/api/register-totp?username:test --output "D:\QRImage.png"
+  curl http://localhost:3001/api/register-totp?username=test --output "D:\QRImage.png"
 ```
 
 ### Response
