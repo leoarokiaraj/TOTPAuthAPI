@@ -19,16 +19,11 @@ const registerTOTPController = async (req, res, next) => {
 
           res.setHeader('Content-disposition', 'attachment; filename=QRFile.png');
           res.setHeader('Content-type', 'image/x-png');     
-          let file = fs.createWriteStream("QRFile.png");
 
-          await QRCode.toFileStream(file, resp.data, {
-            type: 'png',
-            errorCorrectionLevel: 'H'
+          QRCode.toFile("QRFile.png", resp.data,err => {
+            if (err) throw err
+            else res.download("QRFile.png");
           })
-
-          let filestream = fs.createReadStream('QRFile.png');
-          filestream.pipe(res);
-
 
           break;
         case (300 <= resp.StatusCode && 399 >= resp.StatusCode):
