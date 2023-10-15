@@ -41,7 +41,7 @@ The REST API to the TOTPAuthAPI app is described below.
 
 ### Request
 
-`GET api/register-totp?username:{username}`
+`GET api/register-totp?username={username}`
 ```bash
   curl http://localhost:3001/api/register-totp?username=test --output "D:\QRImage.png"
 ```
@@ -59,7 +59,7 @@ The REST API to the TOTPAuthAPI app is described below.
 
 ### Request
 
-`GET api/validate-totp?username:{username}&token={token}`
+`GET api/validate-totp?username={username}&token={token}`
 ```bash
   curl http://localhost:3001/api/validate-totp?username=test&token=123456
 ```
